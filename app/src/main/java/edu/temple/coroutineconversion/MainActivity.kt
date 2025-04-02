@@ -25,12 +25,6 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.currentTextView)
     }
 
-    /*val handler = Handler(Looper.getMainLooper(), Handler.Callback {
-
-        currentTextView.text = String.format(Locale.getDefault(), "Current opacity: %d", it.what)
-        cakeImageView.alpha = it.what / 100f
-        true
-    })*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
