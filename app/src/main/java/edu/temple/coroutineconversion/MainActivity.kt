@@ -7,6 +7,10 @@ import android.os.Looper
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
@@ -21,24 +25,28 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.currentTextView)
     }
 
-    val handler = Handler(Looper.getMainLooper(), Handler.Callback {
+    /*val handler = Handler(Looper.getMainLooper(), Handler.Callback {
 
         currentTextView.text = String.format(Locale.getDefault(), "Current opacity: %d", it.what)
         cakeImageView.alpha = it.what / 100f
         true
-    })
+    })*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         findViewById<Button>(R.id.revealButton).setOnClickListener{
-            Thread{
+            CoroutineScope(Dispatchers.Main).launch{
                 repeat(100) {
-                    handler.sendEmptyMessage(it)
-                    Thread.sleep(40)
+                    (it).run {
+                        currentTextView.text = "Current opacity: " + this + "%"
+                        cakeImageView.alpha = this/100f
+                    }
+                    delay(40)
                 }
-            }.start()
+            }
+
         }
     }
 }
